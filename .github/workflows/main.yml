@@ -1,0 +1,24 @@
+name: CI Pipeline - HTML
+
+on:
+  push:
+    branches:
+      - main  # Define que o pipeline roda quando você fizer um push na branch 'main'
+  pull_request:
+    branches:
+      - main  # Ou quando um PR for feito para a branch 'main'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest  # Vai rodar em um sistema Linux do GitHub
+
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v2  # Faz o checkout do código do seu repositório
+
+      - name: Validar HTML
+        run: |
+          # Vamos usar o HTMLHint para verificar se há erros no código HTML
+          sudo apt-get install -y npm
+          sudo npm install -g htmlhint  # Instala o HTMLHint
+          htmlhint index.html login.html  # Valida os arquivos index.html e login.html
