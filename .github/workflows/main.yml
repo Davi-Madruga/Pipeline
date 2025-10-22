@@ -13,13 +13,20 @@ jobs:
       - name: Checkout do Código
         uses: actions/checkout@v4
 
-      - name: Validar forms.html
-        # 🚨 CORRIGIDO: Usando o nome correto da Action oficial
-        uses: html-validate/html-validate-action@v1
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
         with:
-          args: --files forms.html
-          # A regra "no-unknown-elements" é essencial para falhar nas tags <sa> e <sasa>
-          rules: 'doctype-first, tag-pair, no-unknown-elements'
+          node-version: 18
+
+      - name: Instalar o HTML-Validate
+        # Instala o validador que detecta "no-unknown-elements"
+        run: npm install -g html-validate
+
+      - name: Validar forms.html
+        # Executa o validador e força a verificação das regras
+        run: |
+          echo "🔍 Validando forms.html..."
+          html-validate --rule 'doctype-first:true, tag-pair:true, no-unknown-elements:error' forms.html
 
   verificar-index:
     runs-on: ubuntu-latest
@@ -27,9 +34,15 @@ jobs:
       - name: Checkout do Código
         uses: actions/checkout@v4
 
-      - name: Validar index.html
-        # 🚨 CORRIGIDO: Usando o nome correto da Action oficial
-        uses: html-validate/html-validate-action@v1
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
         with:
-          args: --files index.html
-          rules: 'doctype-first, tag-pair, no-unknown-elements'
+          node-version: 18
+
+      - name: Instalar o HTML-Validate
+        run: npm install -g html-validate
+
+      - name: Validar index.html
+        run: |
+          echo "🔍 Validando index.html..."
+          html-validate --rule 'doctype-first:true, tag-pair:true, no-unknown-elements:error' index.html
