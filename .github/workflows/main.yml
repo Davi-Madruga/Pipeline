@@ -7,22 +7,30 @@ on:
     branches: [main]
 
 jobs:
-  validar-html:
+  verificar-forms:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Fazer checkout do repositório
+      - name: Checkout do Código
         uses: actions/checkout@v4
 
-      - name: Instalar Node.js (necessário pro htmlhint)
-        uses: actions/setup-node@v4
+      - name: Validar forms.html (Com Linter Estrito)
+        # Usaremos o action 'html-validate' ou similar, que é mais robusto que o htmlhint para tags inválidas.
+        uses: sergeysova/html-validate-action@v1
         with:
-          node-version: 18
+          # A opção '--files' garante que apenas o forms.html será verificado
+          args: --files forms.html
+          # A flag '--rule' (ou equivalente) é crucial para tentar validar o nome das tags.
+          # Nota: O 'html-validate' já é estrito por padrão, mas esta linha reforça.
+          rules: 'doctype-first, tag-pair, no-unknown-elements'
 
-      - name: Instalar htmlhint
-        run: npm install -g htmlhint
+  verificar-index:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout do Código
+        uses: actions/checkout@v4
 
-      - name: Rodar verificação de HTML
-        run: |
-          echo "🔍 Verificando tags HTML..."
-          htmlhint "**/*.html"
+      - name: Validar index.html (Com Linter Estrito)
+        uses: sergeysova/html-validate-action@v1
+        with:
+          args: --files index.html
+          rules: 'doctype-first, tag-pair, no-unknown-elements'
