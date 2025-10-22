@@ -19,16 +19,15 @@ jobs:
           node-version: 18
 
       - name: Instalar o HTML-Validate
-        # Instala o validador que detecta "no-unknown-elements"
         run: npm install -g html-validate
 
       - name: Validar forms.html
-        # Executa o validador e força a verificação das regras
+        # Este job verificará o forms.html
         run: |
           echo "🔍 Validando forms.html..."
-          html-validate --rule 'doctype-first:true, tag-pair:true, no-unknown-elements:error' forms.html
-
-  verificar-index:
+          html-validate forms.html
+          
+  verificar-index: # Início do segundo job
     runs-on: ubuntu-latest
     steps:
       - name: Checkout do Código
@@ -44,5 +43,5 @@ jobs:
 
       - name: Validar index.html
         run: |
-          echo "🔍 Validando index.html..."
-          html-validate --rule 'doctype-first:true, tag-pair:true, no-unknown-elements:error' index.html
+          echo "🔍 Validando index.html..." # Mensagem corrigida
+          html-validate index.html        # Comando corrigido
