@@ -15,7 +15,7 @@ jobs:
 
       - name: Validar forms.html (Com Linter Estrito)
         # Usaremos o action 'html-validate' ou similar, que é mais robusto que o htmlhint para tags inválidas.
-        uses: sergeysova/html-validate-action@v1
+        uses: html-validate/html-validate-action@v1
         with:
           # A opção '--files' garante que apenas o forms.html será verificado
           args: --files forms.html
@@ -30,7 +30,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Validar index.html (Com Linter Estrito)
-        uses: sergeysova/html-validate-action@v1
+        uses: html-validate/html-validate-action@v1
         with:
           args: --files index.html
           rules: 'doctype-first, tag-pair, no-unknown-elements'
