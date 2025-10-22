@@ -1,4 +1,4 @@
-name: Verificar HTML
+name: Validação HTML
 
 on:
   push:
@@ -7,20 +7,22 @@ on:
     branches: [main]
 
 jobs:
-  validate-html:
+  validar-html:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Baixar o código
-        uses: actions/checkout@v3
+      - name: Fazer checkout do repositório
+        uses: actions/checkout@v4
 
-      - name: Instalar Node.js
-        uses: actions/setup-node@v3
+      - name: Instalar Node.js (necessário pro htmlhint)
+        uses: actions/setup-node@v4
         with:
-          node-version: '16'
+          node-version: 18
 
-      - name: Instalar HTMLHint
+      - name: Instalar htmlhint
         run: npm install -g htmlhint
 
-      - name: Validar HTML
-        run: htmlhint index.html login.html
+      - name: Rodar verificação de HTML
+        run: |
+          echo "🔍 Verificando tags HTML..."
+          htmlhint "**/*.html"
