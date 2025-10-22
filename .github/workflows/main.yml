@@ -22,12 +22,10 @@ jobs:
         run: npm install -g html-validate
 
       - name: Validar forms.html
-        # Este job verificará o forms.html
         run: |
-          echo "🔍 Validando forms.html..."
           html-validate forms.html
           
-  verificar-index: # Início do segundo job
+  verificar-index:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout do Código
@@ -43,5 +41,4 @@ jobs:
 
       - name: Validar index.html
         run: |
-          echo "🔍 Validando index.html..." # Mensagem corrigida
-          html-validate index.html        # Comando corrigido
+          html-validate index.html
