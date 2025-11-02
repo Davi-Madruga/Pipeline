@@ -7,7 +7,7 @@ on:
     branches: [main]
 
 jobs:
-  verificar-forms:
+  validar-arquivos-html:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout do Código
@@ -21,24 +21,6 @@ jobs:
       - name: Instalar o HTML-Validate
         run: npm install -g html-validate
 
-      - name: Validar forms.html
+      - name: Validar todos os arquivos HTML
         run: |
-          html-validate forms.html
-          
-  verificar-index:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout do Código
-        uses: actions/checkout@v4
-
-      - name: Configurar Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 18
-
-      - name: Instalar o HTML-Validate
-        run: npm install -g html-validate
-
-      - name: Validar index.html
-        run: |
-          html-validate index.html
+          html-validate forms.html index.html
